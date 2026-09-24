@@ -6,12 +6,15 @@ el contenido.
 
 ## Despliegue en Vercel
 
-Este repositorio está configurado para desplegarse en Vercel como sitio
-estático. `vercel.json` en la raíz hace dos cosas:
+Este repositorio se despliega en Vercel como sitio estático. `vercel.json`
+en la raíz hace tres cosas:
 
-- **`outputDirectory: "vantacard-web"`** — el sitio vive en esa subcarpeta,
-  así que Vercel sirve su contenido como raíz del dominio. No hay paso de
-  build: no existe `package.json` y los archivos se publican tal cual.
+- **`buildCommand`** — copia `vantacard-web/` a `dist/`. Sin este paso
+  Vercel sirve la raíz del repositorio, donde no hay `index.html`, y el
+  sitio responde 404: `outputDirectory` por sí solo no basta cuando el
+  proyecto no tiene un build propio.
+- **`outputDirectory: "dist"`** — lo que se publica como raíz del dominio.
+  `dist/` se regenera en cada deploy y está en `.gitignore`.
 - **`headers`** — traduce a Vercel las reglas de `vantacard-web/_headers`
   (que Vercel no lee): las cabeceras de seguridad y el mismo caché por tipo
   de archivo — HTML siempre revalidado, fuentes `immutable` a un año,
